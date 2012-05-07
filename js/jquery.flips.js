@@ -21,8 +21,8 @@
  */
 
 (function( window, undefined ) {
-		
-	$.Flips 				= function( options, element ) {
+	
+	$.Flips 			= function( options, element ) {
 	
 		this.$el	= $( element );
 		this._init( options );
@@ -58,7 +58,7 @@
 			
 				this.currentPage = 0;
 			
-			} 
+			}
 		
 		},
 		_getWinSize			: function() {
@@ -85,7 +85,7 @@
 			
 		},
 		_getState			: function() {
-			
+		
 			this.state = this.History.getState().url.queryStringToJSON().page;
 			
 		},
@@ -107,7 +107,7 @@
 					$page.css({
 						'-webkit-transform'	: 'rotateY( -180deg )',
 						'-moz-transform'	: 'rotateY( -180deg )',
-							'z-index'			: _self.flipPagesCount - 1 + i
+						'z-index'			: _self.flipPagesCount - 1 + i
 					});
 				
 				}
@@ -125,23 +125,23 @@
 					$page.css({
 						'-webkit-transform'	: 'rotateY( 0deg )',
 						'-moz-transform'	: 'rotateY( 0deg )',
-							'z-index'			: _self.flipPagesCount - 1 - i
-						});
+						'z-index'			: _self.flipPagesCount - 1 - i
+					});
 				
 				}
 						
 			} );
-			
+		
 		},
 		_saveState			: function() {
-
+		
 			// adds a new state to the history object and triggers the statechange event on the window
 			var page = this.currentPage;
 			
 			if( this.History.getState().url.queryStringToJSON().page !== page ) {
 					
 				this.History.pushState( null, null, '?page=' + page );
-			
+				
 			}
 			
 		},
@@ -155,11 +155,11 @@
 					pageData	= {
 						theClass				: 'page',
 						theContentFront			: $page.html(),
-					theContentBack			: ( i !== this.pagesCount ) ? this.$pages.eq( i + 1 ).html() : '',
-					theStyle				: 'z-index: ' + ( this.pagesCount - i ) + ';left: ' + ( this.windowProp.width / 2 ) + 'px;',
-					theContentStyleFront	: 'width:' + this.windowProp.width + 'px;',
-					theContentStyleBack		: 'width:' + this.windowProp.width + 'px;'
-				};
+						theContentBack			: ( i !== this.pagesCount ) ? this.$pages.eq( i + 1 ).html() : '',
+						theStyle				: 'z-index: ' + ( this.pagesCount - i ) + ';left: ' + ( this.windowProp.width / 2 ) + 'px;',
+						theContentStyleFront	: 'width:' + this.windowProp.width + 'px;',
+						theContentStyleBack		: 'width:' + this.windowProp.width + 'px;'
+					};
 				
 				if( i === 0 ) {
 				
@@ -373,7 +373,7 @@
 								_self.start = false;
 							
 							}
-			
+							
 							// check which page is clicked/touched
 							_self._setFlippingPage();
 							
@@ -387,23 +387,23 @@
 							
 							if( distance > 0 ) {
 							
-							if( _self._isAnimating() || _self.start ) {
+								if( _self._isAnimating() || _self.start ) {
+										
+									return false;
+								
+								}
+								
+								// adds overlays: shows shadows while flipping
+								if( !_self.hasOverlays ) {
 									
-								return false;
-							
-							}
-							
-							// adds overlays: shows shadows while flipping
-							if( !_self.hasOverlays ) {
+									_self._addOverlays();
+									
+								}
 								
-								_self._addOverlays();
-								
-							}
-								
-							// save last angle
-							_self.angle = angle;
-							// we will update the rotation value of the page while we move it
-							_self._turnPage( angle , true );
+								// save last angle
+								_self.angle = angle;
+								// we will update the rotation value of the page while we move it
+								_self._turnPage( angle , true );
 							
 							}
 							break;
@@ -411,7 +411,7 @@
 						case 'end' :
 							
 							if( distance > 0 ) {
-							
+								
 								if( _self._isAnimating() || _self.start ) return false;
 								
 								_self.isAnimating = true;
@@ -485,13 +485,13 @@
 		
 		},
 		_setFlippingPage	: function() {
-		
+			
 			var _self = this;
 			
 			( this.flipSide === 'l2r' ) ?
 				this.$flippingPage 	= this.$flipPages.eq( this.currentPage - 1 ) :
 				this.$flippingPage	= this.$flipPages.eq( this.currentPage );
-		
+			
 			this.$flippingPage.on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
 				
 				if( $( event.target ).hasClass( 'page' ) ) {
@@ -504,7 +504,7 @@
 		
 		},
 		_updatePage			: function() {
-		
+			
 			if( this.flipSide === 'r2l' ) {
 			
 				++this.currentPage;
@@ -554,17 +554,17 @@
 			
 			} );
 			
-				$( window ).on( 'statechange.flips', function( event ) {
+			$( window ).on( 'statechange.flips', function( event ) {
 				
 				_self._getState();
-					_self._goto();
+				_self._goto();
 				if( !_self.isAnimating ) {
 				
 					_self._adjustLayout( _self.currentPage );
 					
 				}
 				
-				} );
+			} );
 			
 			this.$flipPages.find( '.box' ).on( 'click.flips', function( event ) {
 				
@@ -586,14 +586,15 @@
 						top		: $box.offset().top
 					},
 					$placeholder 	= $box.clone().css( {
-						'position' 				: 'absolute',
-						'width'					: prop.width,
-						'height'				: prop.height,
-						'left'					: prop.left,
-						'top'					: prop.top,
-						'zIndex'				: 9999,
-						'overflow-y'			: 'auto',
-						'-webkit-transition': 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
+						'position' 			: 'absolute',
+						'width'				: prop.width,
+						'height'			: prop.height,
+						'left'				: prop.left,
+						'top'				: prop.top,
+						'zIndex'			: 9999,
+						'overflow-y'		: 'auto',
+						'-webkit-transition': 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
+						'-moz-transition': 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
 					} )
 					.insertAfter( $overlay )
 					.end()
@@ -613,7 +614,8 @@
 								top		: prop.top,
 								width	: prop.width,
 								height	: prop.height,
-								'-webkit-transition' 	: 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
+								'-webkit-transition' 	: 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
+								'-moz-transition' 	: 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
 							});
 						}, 0 );
 						
@@ -622,13 +624,14 @@
 					.hide()
 					.end()
 					.on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
-
+						
 						if( $( event.target ).hasClass( 'box-expanded' ) ) { // expanding
 							
-						$(this).css( {
-							width	: '100%',
+							$(this).css( {
+								width	: '100%',
 								height	: '100%',
-								'-webkit-transition' : 'none'
+								'-webkit-transition' : 'none',
+								'-moz-transition' : 'none'
 							} ).children().fadeIn();
 						
 						}
@@ -642,11 +645,11 @@
 					});
 				
 				setTimeout( function() {
-				
+					
 					$overlay.css( {
 						opacity	: 1
-				} );
-				
+					} );
+					
 					$placeholder.addClass( 'box-expanded' ).css( {
 						left    : 0,
 						top		: 0,
@@ -724,11 +727,11 @@
 			// this will make the page be on "top" of the left ones.
 			// note: if the flipping page is on the left side then we set the z-index after the flip is over.
 			// this is done on the _onEndFlip function.
-			var idx		= ( this.flipSide === 'r2l' ) ? this.currentPage : this.currentPage - 1;
+			var idx	= ( this.flipSide === 'r2l' ) ? this.currentPage : this.currentPage - 1;
 			if( this.flipSide === 'r2l' ) {
 				
 				this.$flippingPage.css( 'z-index', this.flipPagesCount - 1 + idx );
-				
+			
 			}
 			
 			// hack (todo: issues with safari / z-indexes)
@@ -736,8 +739,8 @@
 			
 			// update the angle
 			this.$flippingPage.css( {
-				'-webkit-transform'					: 'rotateY(-' + angle + 'deg)',
-				'-moz-transform'					: 'rotateY(-' + angle + 'deg)'
+				'-webkit-transform'		: 'rotateY(-' + angle + 'deg)',
+				'-moz-transform'		: 'rotateY(-' + angle + 'deg)'
 			} );
 			
 			// show overlays
@@ -808,7 +811,7 @@
 					this.$beforeOverlay.css( 'opacity', beforeOverlayOpacity );
 					
 				}
-					
+				
 				// the flipping page will have a fixed value.
 				// todo: add a gradient instead.
 				var flipOpacity 	= 0.1;
@@ -862,7 +865,7 @@
 					} ).on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
 						if( _self.$beforeOverlay ) _self.$beforeOverlay.off( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips');
 						setTimeout( function() {
-						_self._adjustLayout(_self.currentPage);
+							_self._adjustLayout(_self.currentPage);
 						}, _self.options.flipspeed / 2 - margin );
 					} );
 					
@@ -896,18 +899,18 @@
 					if( beforespeed <= 0 ) beforespeed = 1;
 					
 					this.$beforeOverlay.css( {
-						'-webkit-transition' 	: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
-						'-moz-transition' 		: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
+						'-webkit-transition'	: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
+						'-moz-transition'		: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
 						'opacity'				: ( this.flipDirection === 'left' ) ? 1 : 0
 					} ).on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
 						if( _self.$afterOverlay ) _self.$afterOverlay.off( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips');
 						_self._adjustLayout(_self.currentPage);
 					} );
-				
+					
 				}
 				
 			}
-			
+				
 		}
 	};
 	
@@ -918,7 +921,7 @@
 	};
 	
 	$.fn.flips			= function( options ) {
-	
+		
 		if ( typeof options === 'string' ) {
 			
 			var args = Array.prototype.slice.call( arguments, 1 );
