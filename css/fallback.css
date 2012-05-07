@@ -1,0 +1,41 @@
+.no-csstransforms3d body{
+	overflow: auto;
+}
+.no-csstransforms3d .f-page.f-cover,
+.no-csstransforms3d .f-page.f-cover-back{
+	display: none !important;
+}
+.no-csstransforms3d .f-title{
+	position: relative;
+}
+.no-csstransforms3d .main-title{
+	position: relative;
+	width: 100%;
+}
+.no-csstransforms3d .box{
+	width: auto;
+	float: none;
+	height: auto;
+	margin: 20px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+	cursor: auto;
+}
+.no-csstransforms3d .box:after,
+.no-csstransforms3d .box-img-left:after,
+.no-csstransforms3d .box-img-right:after{
+	display: none;
+}
+.no-csstransforms3d .box .img-cont,
+.no-csstransforms3d .box-img-left .img-cont,
+.no-csstransforms3d .box-img-right .img-cont{
+	width: 300px;
+	height: 200px;
+	float: left;
+	margin: 10px 20px 20px 0;
+}
+.no-csstransforms3d .box-img-left p{
+	margin-left: 0px
+}
+.no-csstransforms3d .box-img-right p{
+	margin-right: 0px
+}
