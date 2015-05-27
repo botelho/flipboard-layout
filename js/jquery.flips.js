@@ -566,6 +566,8 @@
 				
 			} );
 			
+			this.$el.on('dragstart','img', function(event) { event.preventDefault(); });
+			
 			this.$flipPages.find( '.box' ).on( 'click.flips', function( event ) {
 				
 				var $box 			= $(this),
